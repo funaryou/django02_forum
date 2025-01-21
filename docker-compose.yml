@@ -1,0 +1,48 @@
+
+services:
+  #MySQL(データベースのコンテナ情報)
+  lesson02_Mysql:
+    build: ./mysql/
+    container_name: "lesson_Mysql"
+    volumes:
+      - ./mysql/initdb.d:/docker-entrypoint-initdb.d #初期処理のフォルダ。初回起動のみでOK
+      - ./mysql/db:/var/lib/mysql #ここにデータ永続化するためのファイルが入る。
+    image: mysqlapp
+    environment:
+      - MYSQL_ROOT_PASSWORD=mysqlpass1234
+      - MYSQL_USER=docker
+      - MYSQL_PASSWORD=mysqlpass1234
+      - TZ='Asia/Tokyo'
+    ports:
+    - 3306:3306
+    # IPアドレスの固定
+    networks:
+      lesson02_network:
+        ipv4_address: 192.168.2.8
+
+  #Python(Djangoのコンテナ情報)
+  lesson02_django:
+    build: ./django/
+    container_name: 'lesson_django'
+    restart: always
+    tty: true #正常終了させないための仮プロセス
+    ports:
+      - "8000:8000" #Django用
+    volumes:
+      - ./django/dir:/workdir/dir
+    networks:
+        - lesson02_network
+    depends_on:
+      - "lesson02_Mysql"
+    
+
+#Docker内で使用するネットワークの設定
+networks: 
+  lesson02_network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      - subnet: 192.168.2.0/24
+        gateway: 192.168.2.1
+    

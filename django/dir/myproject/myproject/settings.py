@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "forum_app",
+    "accounts",
 ]
 
 MIDDLEWARE = [
@@ -109,6 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ja'
 
+LOGIN_REDIRECT_URL = '/accounts/login'
 TIME_ZONE = 'UTC'
 
 USE_I18N = True

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}カスタムタイトルｓ{% endblock %}
+
+
+{% block content %}
+<ul>
+    {% for posts in post %}
+        <!-- <li>{{ task.title }}:{{ task.description }} (完了フラグ):{{ task.completed }}</li> -->
+        <li>
+            {{ post.title }} - {{ post.content }} -
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

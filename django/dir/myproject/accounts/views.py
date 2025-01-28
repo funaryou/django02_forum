@@ -8,7 +8,7 @@ def register(request):
         if form.is_valid():
             user = form.save()
             login(request, user)  # 登録後にログイン
-            return redirect("login")  # タスクリストへリダイレクト
+            return redirect("post_list")  # タスクリストへリダイレクト
     else:
         form = UserRegistrationForm()
     return render(request, "register.html", {"form": form})

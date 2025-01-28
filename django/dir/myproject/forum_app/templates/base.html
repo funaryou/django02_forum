@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}デフォルトタイトル{% endblock %}</title>
+</head>
+<body>
+    <header style="border-bottom: 1px solid black; display: flex; ">
+        {% block header %}
+        氏名:舟橋諒真
+
+        <a href="{% url 'post_list' %}">Home</a>
+        <a href="{% url 'post_create' %}">Home</a>
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit">logout</button>
+        </form>
+        
+        {% endblock %}
+    </header>
+    <main>
+        {% block content %}
+        共通コンテンツ
+        {% endblock %}
+    </main>
+</body>
+</html>

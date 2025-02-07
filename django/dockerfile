@@ -15,10 +15,13 @@ RUN apt-get -y install locales && \
 RUN pip install --upgrade pip
 RUN pip install --upgrade setuptools
 
+
 #djangoをインストール
 RUN pip install django  
 #MySQL操作用のライブラリをインストール
 RUN pip install mysqlclient 
+
+RUN pip install Pillow
 
 
 # WORKDIR /workdir/dir

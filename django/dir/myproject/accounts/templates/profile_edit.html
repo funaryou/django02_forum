@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div>
+        <label for="id_profile_image">プロフィール画像:</label>
+        <input type="file" name="profile_image" id="id_profile_image" accept="image/*">
+    </div>
+    <button type="submit">更新</button>
+</form>
+</body>
+</html>

@@ -3,31 +3,47 @@
 <head>
     <title>{% block title %}デフォルトタイトル{% endblock %}</title>
 </head>
-<body>
-    <header style="border-bottom: 1px solid black; display: block; ">
+<body style="margin: 0;">
+    <header style="
+        width: 100%;
+        border-bottom: 1px solid black;
+        padding: 20px;
+        background-color: white;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    ">
         {% block header %}
-        <p style="border: 1px solid black;">作者氏名:舟橋諒真</p>
-        
-        <!-- <p>ログイン中のアカウント：{{ request.user.username }}</p> -->
-        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-            <div style="height: 42px; width: 42px; background-color: gray; border-radius: 1000px; flex-shrink: 0; overflow: hidden;">
-                {% if request.user.account.profile_image %}
-                    <img src="{{ request.user.account.profile_image.url }}" alt="profile" style="width: 100%; height: 100%; object-fit: cover;">
-                {% endif %}
+        <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <p style="border: 1px solid black; margin: 0;">作者氏名:舟橋諒真</p>
+                
+                <nav style="display: flex; gap: 20px;">
+                    <a href="{% url 'post_list' %}">HOME</a>
+                    <a href="{% url 'post_create' %}">POST</a>
+                </nav>
             </div>
-            <p style="margin: 0;">{{ request.user.username }}</p>
+
+            <div style="display: flex; align-items: center; gap: 20px;">
+                {% with user=request.user %}
+                <a href="{% url 'profile_detail' user.id %}" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit;" aria-label="Go to {{ user.username }}'s profile">
+                    <div style="height: 42px; width: 42px; background-color: gray; border-radius: 1000px; flex-shrink: 0; overflow: hidden;">
+                        <img src="{{ user.account.profile_image.url }}" alt="{{ user.username }}'s profile image" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <p style="margin: 0;">{{ user.username }}</p>
+                </a>
+                {% endwith %}
+
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit">Logout</button>
+                </form>
+            </div>
         </div>
-        <a href="{% url 'post_list' %}">HOME</a>　　　
-        <a href="{% url 'post_create' %}">POST</a>
-        
-        <form method="post" action="{% url 'logout' %}">
-            {% csrf_token %}
-            <button type="submit">logout</button>
-        </form>
-        
         {% endblock %}
     </header>
-    <main>
+
+    <main style="max-width: 1200px; margin: 20px auto; padding: 0 20px;">
         {% block content %}
         共通コンテンツ
         {% endblock %}

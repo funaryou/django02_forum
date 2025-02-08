@@ -15,3 +15,13 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+class Reply(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='replies')  # 元のPostに関連
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    parent_reply = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE, related_name='replies', default=None)  # リプライの親
+
+    def __str__(self):
+        return f"Reply to {self.post.title}"
+    

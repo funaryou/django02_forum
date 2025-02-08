@@ -2,30 +2,32 @@
 
 {% block title %}ポスト表示{% endblock %}
 
-
 {% block content %}
+<div style="padding-left: 20px;">
+    <form method="GET" action="{% url 'post_list' %}" >
+        <input type="text" name="q" value="{{ query|default:'' }}" placeholder="検索...">
+        <button type="submit">検索</button>
+    </form>
+</div>
 
-<form method="GET" action="{% url 'post_list' %}" >
-    <input type="text" name="q" value="{{ query|default:'' }}" placeholder="検索...">
-    <button type="submit">検索</button>
-</form>
-
-
-<ul>
+<ul style="margin-top: 20px;">
     {% for post in posts %}
         <!-- <li>{{ task.title }}:{{ task.description }} (完了フラグ):{{ task.completed }}</li> -->
         <li style="border: 1px solid black; margin-top: 20px; padding: 10px; list-style: none;">
-            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+            <a href="{% url 'profile_detail' post.author.id %}" style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; text-decoration: none; color: inherit;">
                 <div style="height: 42px; width: 42px; background-color: gray; border-radius: 1000px; flex-shrink: 0; overflow: hidden;">
                     {% if post.author.account.profile_image %}
                         <img src="{{ post.author.account.profile_image.url }}" alt="profile" style="width: 100%; height: 100%; object-fit: cover;">
                     {% endif %}
                 </div>
                 <p style="margin: 0;">{{ post.author }}　　　{{ post.updated_at }}</p>
-            </div>
-            <a href="{% url 'post_detail' post.id %}">{{ post.title }}</a>
+            </a>
+            <a href="{% url 'post_detail' post.id %}" style="color: inherit; text-decoration: none; width: 100%; height: 100%;">
+            <h1>{{ post.title }}</h1>
             <p>{{ post.content }}</p>
             <br><br>
+            </a>
+            <a href="{% url 'reply_create' post.id %}">reply</a>
         </li>
         {% empty %}
         <li>投稿が見つかりませんでした。</li>

@@ -2,12 +2,13 @@
 
 {% block title %}確認画面{% endblock %}
 
-
 {% block content %}
-<form method="post">
-    {% csrf_token %}
-    まじでけすの！？？！？！？？！？！？？！？！？？！？！？？！？！？？！？！？？！？！？！？！！！？！？？！
-    <button type="submit">delete</button>
-</form>
-<a href="{% url 'post_list' %}">back</a>
+<div style="padding-left: 20px;">
+    <form method="post">
+        {% csrf_token %}
+        まじでけすの！？？！？！？？！？！？？！？！？？！？！？？！？！？？！？！？？！？！？！？！！！？！？？！
+        <button type="submit">delete</button>
+    </form>
+    <a href="{% url 'post_list' %}">back</a>
+</div>
 {% endblock %}

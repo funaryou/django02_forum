@@ -2,14 +2,15 @@
 
 {% block title %}ポスト作成{% endblock %}
 
-
 {% block content %}
-{%if form.instance.pk %}ポスト編集{% else %}ポスト作成{% endif %}
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
+<div style="padding-left: 20px;">
+    {%if form.instance.pk %}ポスト編集{% else %}ポスト作成{% endif %}
 
-    <button type="submit">up!</button>
-</form>
-<a href="{% url 'post_list' %}">back</a>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">up!</button>
+    </form>
+    <a href="{% url 'post_list' %}">back</a>
+</div>
 {% endblock %}

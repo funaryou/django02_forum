@@ -1,18 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    <div>
-        <label for="id_profile_image">プロフィール画像:</label>
-        <input type="file" name="profile_image" id="id_profile_image" accept="image/*">
+{% extends "base.html" %}
+
+{% block content %}
+<div style="padding-left: 20px;">
+    <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 30px;">
+        <div>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                ユーザーネーム:<input type="text" value="{{ user.username }}" style="font-size: 3.5rem;" name="user_name">
+                <br>
+                ユーザーアイコン:<input type="file" id="imageInput" name="profile_image">
+                <br><br>
+                自己紹介:<textarea name="profile_comment" rows="10" cols="50">{{ account.profile_comment }}</textarea>
+                <br>
+                <button type="submit">update</button>
+            </form>
+        </div>
     </div>
-    <button type="submit">更新</button>
-</form>
-</body>
-</html>
+</div>
+
+{% endblock %}

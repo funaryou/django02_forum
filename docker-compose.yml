@@ -1,4 +1,3 @@
-
 services:
   #MySQL(データベースのコンテナ情報)
   lesson02_Mysql:
@@ -12,6 +11,11 @@ services:
       - MYSQL_ROOT_PASSWORD=mysqlpass1234
       - MYSQL_USER=docker
       - MYSQL_PASSWORD=mysqlpass1234
+
+#=====追加部分=====
+      - MYSQL_DATABASE=mydatabase    # データベースを自動作成
+#=====追加部分=====
+
       - TZ='Asia/Tokyo'
     ports:
     - 3306:3306
@@ -19,6 +23,15 @@ services:
     networks:
       lesson02_network:
         ipv4_address: 192.168.2.8
+
+#=====追加部分=====
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$$MYSQL_ROOT_PASSWORD"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+#=====追加部分=====
 
   #Python(Djangoのコンテナ情報)
   lesson02_django:
@@ -33,8 +46,11 @@ services:
     networks:
         - lesson02_network
     depends_on:
-      - "lesson02_Mysql"
-    
+
+#=====変更部分=====
+      lesson02_Mysql:
+        condition: service_healthy    # MySQLが健全な状態になるまで待機
+#=====変更部分=====
 
 #Docker内で使用するネットワークの設定
 networks: 

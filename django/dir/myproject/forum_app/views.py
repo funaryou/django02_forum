@@ -27,7 +27,8 @@ def post_list(request):
         posts = Post.objects.filter(
             Q(title__icontains=query) |  # タイトルで検索
             Q(content__icontains=query) |
-            Q(author__username__icontains=query)  # 内容で検索
+            Q(author__username__icontains=query) |
+            Q(created_at__icontains=query) # 内容で検索
         ).order_by('-created_at')
     else:
         # 検索クエリがない場合は全ての投稿を表示
